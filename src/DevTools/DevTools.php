@@ -44,8 +44,8 @@ class DevTools extends PluginBase implements CommandExecutor{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
 
-		$this->getServer()->getPluginManager()->registerInterface("FolderPluginLoader\\FolderPluginLoader");
-		$this->getServer()->getPluginManager()->loadPlugins($this->getServer()->getPluginPath(), ["FolderPluginLoader\\FolderPluginLoader"]);
+		$this->getServer()->getPluginManager()->registerInterface(FolderPluginLoader::class);
+		$this->getServer()->getPluginManager()->loadPlugins($this->getServer()->getPluginPath(), [FolderPluginLoader::class]);
 		$this->getLogger()->info("Registered folder plugin loader");
 		$this->getServer()->enablePlugins(PluginLoadOrder::STARTUP);
 
@@ -189,7 +189,7 @@ class DevTools extends PluginBase implements CommandExecutor{
 			$stub = sprintf(DEVTOOLS_PLUGIN_STUB, $description->getName(), $description->getVersion(), $this->getDescription()->getVersion(), date("r"));
 		}
 
-		$reflection = new \ReflectionClass("pocketmine\\plugin\\PluginBase");
+		$reflection = new \ReflectionClass(PluginBase::class);
 		$file = $reflection->getProperty("file");
 		$file->setAccessible(true);
 		$filePath = realpath($file->getValue($plugin));
